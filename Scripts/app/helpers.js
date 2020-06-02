@@ -45,10 +45,18 @@ MovieDB.helpers.loadMoviesList = function (params) {
     return MovieDB.helpers.request('{0}?{1}'.format(path, qsParams.join('&')));
 }
 
+/**
+ * Loads movie's details info from API
+ * @param {int} movieId
+ */
 MovieDB.helpers.loadMovieDetails = function (movieId) {
     return MovieDB.helpers.request('/movie/{0}'.format(movieId))
 }
 
+/**
+ * Handles the URL rewrite based on selected movie ID
+ * @param {int} movieId
+ */
 MovieDB.helpers.setQueryStringMovieId = function (movieId) {
 
     var newUrl = null;
@@ -62,6 +70,10 @@ MovieDB.helpers.setQueryStringMovieId = function (movieId) {
     window.history.pushState(null, "Movie Url change", newUrl);
 }
 
+/**
+ * Returns a parameter value from query string, based on parameter name
+ * @param {string} paramName
+ */
 MovieDB.helpers.getUrlParameter = function (paramName) {
     var sPageURL = window.location.search.substring(1),
         sURLVariables = sPageURL.split('&'),

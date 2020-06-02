@@ -1,4 +1,7 @@
-﻿MovieDB.enums = {
+﻿/**
+ * Enums used by application
+ * */
+MovieDB.enums = {
     urlParams: {
         apiKey: 'api_key',
         movieList: {

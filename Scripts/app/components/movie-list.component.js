@@ -4,7 +4,7 @@
  * Params:
  * movies<array> - array of movies that should be showed
  * selectedMovieId<Observable | int> - preselected movie ID
- * preloadMovies<bool> - preload popular movies on its own or not
+ * preloadMovies<bool> - defines if component should preload popular movies on its own or not
  */
 ko.components.register('movie-list', {
     template: {
@@ -16,13 +16,15 @@ ko.components.register('movie-list', {
         self.helpers = MovieDB.helpers;
         var urlParamEnums = MovieDB.enums.urlParams;
 
-        //list of all movies
         if (ko.isObservable(params.movies))
             self.movies = params.movies;
         else
             self.movies = ko.observableArray(params.movies);
 
-        self.selectedMovieId = params.selectedMovieId;
+        if (ko.isObservable(params.selectedMovieId))
+            self.selectedMovieId = params.selectedMovieId;
+        else
+            self.selectedMovieId = ko.observable(params.selectedMovieId);
 
         self.preloadMovies = params.preloadMovies != undefined ? params.preloadMovies : true;
 
@@ -112,6 +114,7 @@ ko.components.register('movie-list', {
                 });
         };
 
+        //increases page number to load next part of movie list
         self.increasePageNumber = function () {
             if (self.page() >= self.totalPages())
                 return;

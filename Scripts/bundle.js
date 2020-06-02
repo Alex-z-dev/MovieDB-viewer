@@ -154,6 +154,7 @@ String.prototype.format = function () {
     }
     return formatted;
 };
+//predefine app's settings object
 var MovieDB = {
     helpers: {},
     settings: {},
@@ -161,6 +162,7 @@ var MovieDB = {
     enums: {}
 };
 
+//loads MainViewModel to element with id 'main-container'
 $(document).ready(function () {
     var vm = new MainViewModel();
     ko.applyBindings(vm, document.getElementById('main-container'));
@@ -176,6 +178,9 @@ MovieDB.settings = {
         secure_base_url: "https://image.tmdb.org/t/p/"
     }
 };
+/**
+ * Enums used by application
+ * */
 MovieDB.enums = {
     urlParams: {
         apiKey: 'api_key',
@@ -246,10 +251,18 @@ MovieDB.helpers.loadMoviesList = function (params) {
     return MovieDB.helpers.request('{0}?{1}'.format(path, qsParams.join('&')));
 }
 
+/**
+ * Loads movie's details info from API
+ * @param {int} movieId
+ */
 MovieDB.helpers.loadMovieDetails = function (movieId) {
     return MovieDB.helpers.request('/movie/{0}'.format(movieId))
 }
 
+/**
+ * Handles the URL rewrite based on selected movie ID
+ * @param {int} movieId
+ */
 MovieDB.helpers.setQueryStringMovieId = function (movieId) {
 
     var newUrl = null;
@@ -263,6 +276,10 @@ MovieDB.helpers.setQueryStringMovieId = function (movieId) {
     window.history.pushState(null, "Movie Url change", newUrl);
 }
 
+/**
+ * Returns a parameter value from query string, based on parameter name
+ * @param {string} paramName
+ */
 MovieDB.helpers.getUrlParameter = function (paramName) {
     var sPageURL = window.location.search.substring(1),
         sURLVariables = sPageURL.split('&'),
@@ -396,9 +413,6 @@ function MainViewModel() {
 
     self.selectedMovieId = ko.observable(null);
 
-    //TODO: should be preloaded from URL (if parameter exist)
-    self.searchKeyword = ko.observable('');
-
     var uriMovieId = parseInt(MovieDB.helpers.getUrlParameter(MovieDB.enums.urlParams.movieDetails.movieId));
     if (uriMovieId) {
         self.selectedMovieId(uriMovieId);
@@ -527,7 +541,7 @@ ko.components.register('movie-details', {
  * Params:
  * movies<array> - array of movies that should be showed
  * selectedMovieId<Observable | int> - preselected movie ID
- * preloadMovies<bool> - preload popular movies on its own or not
+ * preloadMovies<bool> - defines if component should preload popular movies on its own or not
  */
 ko.components.register('movie-list', {
     template: {
@@ -539,13 +553,15 @@ ko.components.register('movie-list', {
         self.helpers = MovieDB.helpers;
         var urlParamEnums = MovieDB.enums.urlParams;
 
-        //list of all movies
         if (ko.isObservable(params.movies))
             self.movies = params.movies;
         else
             self.movies = ko.observableArray(params.movies);
 
-        self.selectedMovieId = params.selectedMovieId;
+        if (ko.isObservable(params.selectedMovieId))
+            self.selectedMovieId = params.selectedMovieId;
+        else
+            self.selectedMovieId = ko.observable(params.selectedMovieId);
 
         self.preloadMovies = params.preloadMovies != undefined ? params.preloadMovies : true;
 
@@ -635,6 +651,7 @@ ko.components.register('movie-list', {
                 });
         };
 
+        //increases page number to load next part of movie list
         self.increasePageNumber = function () {
             if (self.page() >= self.totalPages())
                 return;
