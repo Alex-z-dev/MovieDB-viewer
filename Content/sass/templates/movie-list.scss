@@ -1,0 +1,51 @@
+﻿.movie-list {
+    display: block;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+
+    .no-movies {
+        display: flex;
+        height: 100vh;
+    }
+
+    .movie-list-item {
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid $c-gray-dark;
+        background-color: none;
+        transition: background-color 300ms;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .movie-list-item-content {
+            padding: 10px 10px 10px 15px;
+            display: flex;
+
+            .title {
+                margin: auto auto auto 0;
+            }
+
+            .glyphicon {
+                display: none;
+                margin: auto 0 auto auto;
+                font-size: 18px;
+                padding: 0 10px;
+            }
+        }
+
+        &:hover, &.selected {
+            background-color: $c-gray-light;
+            transition: background-color 300ms;
+            text-decoration: none;
+        }
+
+        &.selected {
+            .glyphicon {
+                display: block;
+            }
+        }
+    }
+}

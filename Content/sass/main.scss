@@ -1,0 +1,19 @@
+﻿/* Fonts */
+@import 'content/fonts/glyphicons/glyphicons.scss';
+
+/* Third party styling */
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+
+
+/* Basic items */
+@import 'variables.scss';
+@import 'layout.scss';
+
+
+/* Templates */
+@import 'templates/movie-details.scss';
+@import 'templates/movie-list.scss';
+@import 'templates/preloader.scss';
+
+/* Pages */
+@import 'pages/movie-list-page.scss';

@@ -1,0 +1,17 @@
+﻿@using MovieDB.Resources;
+
+<!-- ko if: error -->
+<div class="error-container">
+    <div class="error">
+        <div data-bind="attr: { class: error.getErrorCssClass }">
+            <span data-bind="html: error.message"></span>
+        </div>
+
+        <!-- ko if: typeof(callback) == 'function' -->
+        <div class="actions">
+            <a href="#" class="action link" data-bind="click: callback.bind()">@Labels.Reload</a>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+<!-- /ko -->

@@ -1,0 +1,38 @@
+﻿@using MovieDB.Resources;
+
+<div class="movie-list" data-bind="scroll: { options: { onReachEnd: increasePageNumber } }">
+<!-- ko if: movies() && movies().length > 0 -->
+    <!-- ko foreach: movies -->
+    <a href="#" class="movie-list-item" data-bind="click: $parent.selectMovie.bind(), css: { selected: $data.id == $parent.selectedMovieId() }">
+        <div class="movie-list-item-content" >
+            <span class="title" data-bind="html: title"></span>
+            <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </div>
+    </a>
+    <!-- /ko -->
+<!-- /ko -->
+
+<!-- ko if: (!movies() || movies().length == 0) && !loading() && !errorThrown() -->
+    <div class="no-movies">
+        @Labels.NoMoviesToShow
+    </div>
+<!-- /ko -->
+
+<!-- ko if: !loading()-->
+    <!-- ko component: {
+        name: "error-message",
+        params: { 
+            error: errorThrown()
+        }
+    } -->
+    <!-- /ko -->
+<!-- /ko -->
+
+<!-- ko component: {
+    name: "preloader",
+    params: { 
+        loading: loading
+    }
+} -->
+<!-- /ko -->
+</div>

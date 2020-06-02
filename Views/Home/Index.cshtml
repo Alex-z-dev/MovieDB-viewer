@@ -1,0 +1,12 @@
+﻿@using MovieDB.Resources;
+
+<div class="movie-list-page">
+    <div class="page-left-container col-md-4">
+        <movie-list params="selectedMovieId: selectedMovieId, preloadMovies: true"></movie-list>
+    </div>
+    <div class="page-right-container col-md-8">
+        <movie-details params="selectedMovieId: selectedMovieId"></movie-details>
+    </div>
+</div>
+
+@{ Html.RenderPartial("~/Views/Bundles/MoviesTemplates.cshtml"); }

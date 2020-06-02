@@ -1,0 +1,48 @@
+﻿@using MovieDB.Resources;
+
+<div class="movie-details" data-bind="scroll: {}">
+<!-- ko if: selectedMovie() && !loading() && !errorThrown() -->
+<div class="movie-info" data-bind="with: selectedMovie">
+    <div class="image-container">
+        <img class="image" data-bind="attr: { src: getPosterUrl('w500'), alt: title, title: title }" />
+    </div>
+    <div class="content">
+        <h1 class="title" data-bind="html: title"></h1>
+        <div class="overview" data-bind="html: overview"></div>
+    </div>
+    <div class="actions">
+        <a href="#" class="close-movie-details" data-bind="click: $parent.unselectMovie.bind()">@Labels.CloseMovieDetails</a>
+    </div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: !selectedMovieId() && !loading() && !errorThrown() -->
+    
+    <div class="movie-not-selected">
+        <span class="text">
+            @Html.Raw(Labels.NoMovieSelected)
+        </span>
+        <span class="glyphicon glyphicon-arrow-left"></span>
+    </div>
+    
+<!-- /ko -->
+
+<!-- ko if: !loading() -->
+    <!-- ko component: {
+        name: "error-message",
+        params: { 
+            error: errorThrown(),
+            callbackAction: reloadMovieDetails
+        }
+    } -->
+    <!-- /ko -->
+<!-- /ko -->
+
+<!-- ko component: {
+    name: "preloader",
+    params: { 
+        loading: loading
+    }
+} -->
+<!-- /ko -->
+</div>

@@ -1,0 +1,66 @@
+﻿.movie-details {
+    height: 100%;
+    overflow: auto;
+    display: block;
+
+    .movie-info {
+        display: grid;
+        position: relative;
+        grid-template-areas: 'image overview' '. actions';
+        grid-gap: 20px;
+
+        .image-container {
+            grid-area: image;
+            display: inline;
+            max-height: 250px;
+
+            .image {
+                max-height: 250px;
+            }
+        }
+
+        .content {
+            .title {
+                font-size: 24px;
+                line-height: 30px;
+            }
+
+            .overview {
+                grid-area: overview;
+                display: inline;
+            }
+        }
+
+        .actions {
+            grid-area: actions;
+
+            .close-movie-details {
+                border: solid 1px $c-primary;
+                padding: 5px 10px;
+                float: right;
+                background-color: $c-white;
+                transition: background-color ease-in-out 300ms;
+
+                &:hover {
+                    background-color: $c-gray-light;
+                    transition: background-color ease-in-out 300ms;
+                }
+            }
+        }
+    }
+
+    .movie-not-selected {
+        display: flex;
+        flex-direction: column;
+
+
+        .text {
+            margin: auto;
+        }
+
+        .glyphicon {
+            margin: 20px auto auto auto;
+            font-size: 30px;
+        }
+    }
+}
